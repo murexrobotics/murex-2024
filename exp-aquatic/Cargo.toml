@@ -1,0 +1,34 @@
+[package]
+name = "murex-2024"
+version = "0.1.0"
+edition = "2021"
+description = "High performance ROV control software for MATE-ROV competition."
+license = "MIT"
+authors = ["Altan Ünver, Ph.D.", "Byran Huang, Ph.D.", "Chaney Hollis", "Ethan Cheng", "Celine Zhang"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "aquatic"
+path = "src/main.rs"
+
+[lib]
+name = "aquatic"
+path = "src/lib.rs"
+
+[dependencies]
+bme680 = { path = "./bme680", optional = true }
+bmi088 = { path = "./bmi088", optional = true }
+pca9685 = { path = "./pca9685", optional = true }
+
+[features]
+default = [] # No features enabled by default
+bme680_driver = ["bme680"]
+bmi088_driver = ["bmi088"]
+pca9685_driver = []
+
+[dev-dependencies]
+flamegraph = "0.6.2"
+
+# Tune build parameters in future
+# [profile.dev]
+# [profile.release]
