@@ -3,5 +3,6 @@ members = [
     "exp-aquatic", 
     "exp-aquatic/bme680", 
     "exp-aquatic/bmi088", 
-    "exp-aquatic/pca9685"
+    "exp-aquatic/pca9685",
+    "exp-aquatic/ms5837"
 ]

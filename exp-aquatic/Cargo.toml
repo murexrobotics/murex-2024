@@ -16,15 +16,17 @@ name = "aquatic"
 path = "src/lib.rs"
 
 [dependencies]
+ms5837 = { path = "./ms5837", optional = false }
 bme680 = { path = "./bme680", optional = true }
 bmi088 = { path = "./bmi088", optional = true }
 pca9685 = { path = "./pca9685", optional = true }
+
 
 [features]
 default = [] # No features enabled by default
 bme680_driver = ["bme680"]
 bmi088_driver = ["bmi088"]
-pca9685_driver = []
+pca9685_driver = ["pca9685"]
 
 [dev-dependencies]
 flamegraph = "0.6.2"
