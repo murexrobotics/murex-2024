@@ -2,3 +2,7 @@
 name = "bme680"
 version = "0.1.0"
 edition = "2021"
+
+[dependencies]
+i2cdev = "0.5.1"
+# linux-embedded-hal = "0.3.2"
