@@ -4,5 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-i2cdev = "0.5.1"
-# linux-embedded-hal = "0.3.2"
+bme680 = "0.6.0"
+embedded-hal = "0.2.7"
+linux-embedded-hal = "0.3.2"
+env_logger = "0.9"
+log = "0.4"

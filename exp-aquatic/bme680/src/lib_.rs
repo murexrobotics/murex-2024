@@ -114,14 +114,18 @@ struct Bme680<T: I2CDevice + Sized> {
 impl<T: I2CDevice + Sized> Bme680<T> {
     pub fn new(mut i2c_handle: T) -> Result<Self, BmeError<T>> {
         // Soft Reset, needed when powering on/ initializing the sensor. Datasheet p.53
+        println!("Resetting sensor");
         if let Err(error) = i2c_handle.smbus_write_byte_data(Register::RESET as u8, 0xB6) {
+            println!("{:?}", error);
             return Err(BmeError::I2CError(error));
         }
         thread::sleep(Duration::from_millis(5));
 
         // Verify that correct sensor is connected
+        println!("Verifying sensor ID");
         match i2c_handle.smbus_read_byte_data(Register::ID as u8) {
             Ok(id) => if id != BME680_ID {
+                println!("Wrong sensor ID: {}", id);
                 return Err(BmeError::WrongId);
             },
             Err(error) => return Err(BmeError::I2CError(error)),
@@ -309,7 +313,9 @@ mod tests {
     #[test]
     fn get_sensor_data() {
         let mut i2c_handle: LinuxI2CDevice = LinuxI2CDevice::new("/dev/i2c-1", BME680_I2C_ADDR).unwrap();
-        let bme = Bme680::new(i2c_handle).ok().unwrap();
-        
+        let bme = match Bme680::new(i2c_handle) {
+            Ok(bme) => bme,
+            Err(e) => panic!("Error"),
+        };
     }
 }
