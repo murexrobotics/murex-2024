@@ -7,7 +7,7 @@ use std::time::Duration;
 use i2cdev::linux::{LinuxI2CDevice, LinuxI2CError};
 use i2cdev::core::I2CDevice;
 
-const BME680_I2C_ADDR: u16 = 0x76;
+const BME680_I2C_ADDR: u16 = 0x77;
 const BME680_ID: u8 = 0x61;
 
 #[allow(non_camel_case_types)]
@@ -191,12 +191,12 @@ impl<T: I2CDevice + Sized> Bme680<T> {
         let temp_msb = self.read_byte(Register::TEMP_MSB as u8)?;
         let temp_lsb = self.read_byte(Register::TEMP_LSB as u8)?;
         let temp_xlsb = self.read_byte(Register::TEMP_XLSB as u8)?;
-        self.raw_temperature = (temp_msb as u32) << 13 | (temp_lsb as u32) << 4 | (temp_xlsb as u32); // Technically only needs 20 bits but 32 is smallest size that works
+        self.raw_temperature = (temp_msb as u32) << 12 | (temp_lsb as u32) << 4 | (temp_xlsb as u32) >> 4; // Technically only needs 20 bits but 32 is smallest size that works
 
         let press_msb = self.read_byte(Register::PRESS_MSB as u8)?;
         let press_lsb = self.read_byte(Register::PRESS_LSB as u8)?;
         let press_xlsb = self.read_byte(Register::PRESS_XLSB as u8)?;
-        self.raw_pressure = (press_msb as u32) << 13 | (press_lsb as u32) << 4 | (press_xlsb as u32); // Technically only needs 20 bits but 32 is smallest size that works
+        self.raw_pressure = (press_msb as u32) << 12 | (press_lsb as u32) << 4 | (press_xlsb as u32) >> 4; // Technically only needs 20 bits but 32 is smallest size that works
 
         // Calibrate raw values
         // Order is important, temperature must be calibrated first
