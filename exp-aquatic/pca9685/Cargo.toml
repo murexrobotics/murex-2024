@@ -2,3 +2,7 @@
 name = "pca9685"
 version = "0.1.0"
 edition = "2021"
+
+[dependencies]
+linux-embedded-hal = "0.3.2"
+embedded-hal = "0.2.4"
