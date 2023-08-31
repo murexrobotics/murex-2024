@@ -1,5 +1,7 @@
-fn main() {
-    #[cfg(feature = "custom_driver")]
-    println!("Custom Drivers Enabled");
-    println!("Hello, world!");
-}
+#![allow(dead_code, unused_must_use)]
+
+mod input;
+mod error;
+mod actions;
+
+fn main() {}

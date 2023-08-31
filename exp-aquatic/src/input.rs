@@ -1,25 +1,14 @@
 use std::net::UdpSocket;
 use crate::error::{Error, Result};
+use crate::actions::Actions;
 use std::time::Duration;
-use std::sync::mpsc::channel;
-use std::thread::Thread;
+
+// use std::sync::mpsc::channel;
+// use std::thread::Thread;
 
 const PI_PORT: u16 = 1234;
 const PI_IP_ADDRESS: &str = "";
 const MAX_MESSAGE_SIZE: usize = 16;
-
-pub enum Actions {
-    // positive throttle is forward, negative throttle is reverse
-    // throttle must be between -1.0 and 1.0
-    // out of bounds will be clamped
-    Throttle(usize, f32), // (motor, throttle)
-    // System diagnostics
-    Report,
-    // System shutdown
-    Shutdown,
-    // System reboot
-    Reboot,
-}
 
 /// Initialize socket connection between the Pi and the topside computer.
 /// Must receive 0xFF from topside computer to establish connection.
