@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 embedded-hal = "0.2.4"
 linux-embedded-hal = "0.3.0"
+rppal = "0.14.1"
 
 [features]
 default = ["i2c", "uart", "logging"]

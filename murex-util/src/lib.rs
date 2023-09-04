@@ -6,3 +6,5 @@ mod i2c;
 
 #[cfg(feature = "logging")]
 mod logging;
+
+mod mascp;
