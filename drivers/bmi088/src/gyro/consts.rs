@@ -1,0 +1,30 @@
+const FIFO_DATA: u8 = 0x3F;
+const FIFO_CONFIG_1: u8 = 0x3E;
+const FIFO_CONFIG_0: u8 = 0x3D;
+const GRYO_SELF_TEST: u8 = 0x3C;
+// 0x3B - 0x35: reserved
+const FIFO_EXT_INT_S: u8 = 0x34;
+// 0x33 - 0x1F: reserved
+const FIFO_WM_EN: u8 = 0x1E;
+// 0x1D - 0x19: reserved
+const INT3_INT4_IO_MAP: u8 = 0x18;
+// 0x17: reserved
+const INT3_INT4_IO_CONF: u8 = 0x16;
+const GYRO_INT_CTRL: u8 = 0x15;
+const GYRO_SOFTRESET: u8 = 0x14;
+// 0x13 - 0x12: reserved
+const GYRO_LPM1: u8 = 0x11;
+const GYRO_BANDWIDTH: u8 = 0x10;
+const GYRO_RANGE: u8 = 0x0F;
+const FIFO_STATUS: u8 = 0x0E;
+// 0x0D - 0x0B: reserved
+const GYRO_INT_STAT_1: u8 = 0x0A;
+// 0x09 - 0x08: reserved
+const RATE_Z_MSB: u8 = 0x07;
+const RATE_Z_LSB: u8 = 0x06;
+const RATE_Y_MSB: u8 = 0x05;
+const RATE_Y_LSB: u8 = 0x04;
+const RATE_X_MSB: u8 = 0x03;
+const RATE_X_LSB: u8 = 0x02;
+// 0x01: reserved
+const GYRO_CHIP_ID: u8 = 0x00;
