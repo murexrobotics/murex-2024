@@ -1,3 +1,5 @@
+# cargo-features = ["per-package-target"]
+
 [package]
 name = "murex-2024"
 version = "0.1.0"
@@ -5,6 +7,7 @@ edition = "2021"
 description = "High performance ROV control software for MATE-ROV competition."
 license = "MIT"
 authors = ["Altan Ünver, Ph.D.", "Byran Huang, Ph.D.", "Chaney Hollis", "Ethan Cheng", "Celine Zhang"]
+# forced-target = "armv7-unknown-linux-musleabihf"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]
@@ -16,17 +19,24 @@ name = "aquatic"
 path = "src/lib.rs"
 
 [dependencies]
-ms5837 = { path = "./ms5837", optional = false }
-bme680 = { path = "./bme680", optional = true }
-bmi088 = { path = "./bmi088", optional = true }
-pca9685 = { path = "./pca9685", optional = true }
+async-trait = "0.1.73"
+embedded-hal = "0.2.7"
+enum_dispatch = "0.3.12"
+rppal = "0.14.1"
+text_io = "0.1.12"
+tokio = { version = "1.32.0", features = ["full"] }
+
+# ms5837 = { path = "../drivers/ms5837", optional = false }
+# bme680 = { path = "../drivers/bme680", optional = true }
+# bmi088 = { path = "../drivers/bmi088", optional = true }
+# pca9685 = { path = "../drivers/pca9685", optional = true }
 
 
 [features]
 default = [] # No features enabled by default
-bme680_driver = ["bme680"]
-bmi088_driver = ["bmi088"]
-pca9685_driver = ["pca9685"]
+# bme680_driver = ["bme680"]
+# bmi088_driver = ["bmi088"]
+# pca9685_driver = ["pca9685"]
 
 [dev-dependencies]
 flamegraph = "0.6.2"
@@ -34,3 +44,8 @@ flamegraph = "0.6.2"
 # Tune build parameters in future
 # [profile.dev]
 # [profile.release]
+# strip = true
+# opt-level = "z"  # Optimize for size.
+# lto = true
+# codegen-units = 1
+# panic = "abort"

@@ -1,7 +1,10 @@
 #![allow(dead_code, unused_must_use)]
+#![feature(async_fn_in_trait)]
 
-mod input;
-mod error;
+use tokio;
+// mod input;
+// mod error;
 mod actions;
 
-fn main() {}
+fn main() {
+}
