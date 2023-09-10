@@ -3,3 +3,4 @@ target = "armv7-unknown-linux-musleabihf" # CM4 Code
 
 [target.armv7-unknown-linux-musleabihf]
 linker = "arm-linux-gnueabihf-ld"
+ar = "arm-linux-gnueabihf-ar"
