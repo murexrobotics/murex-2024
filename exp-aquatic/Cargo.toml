@@ -40,7 +40,6 @@ default = [] # No features enabled by default
 
 [dev-dependencies]
 flamegraph = "0.6.2"
-
 # Tune build parameters in future
 # [profile.dev]
 # [profile.release]
