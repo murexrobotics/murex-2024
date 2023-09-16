@@ -6,13 +6,13 @@ pub struct Throttle {
     interval: Duration
 }
 
-pub struct Stabilize;
-
 impl Action for Throttle {
     async fn exec(self) {
         todo!()
     }
 }
+
+pub struct Stabilize;
 
 impl Action for Stabilize {
     async fn exec(self) {
