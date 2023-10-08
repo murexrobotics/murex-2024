@@ -1,11 +1,6 @@
 use crate::actions::Action;
-
 use std::net::UdpSocket;
-// use std::time::Duration;
-
-
-// use std::sync::mpsc::channel;
-// use std::thread::Thread;
+use std::time::Duration;
 
 const CONNECTION_ATTEMPTS: i32 = 5;
 const PI_PORT: u16 = 5678;
@@ -24,9 +19,7 @@ pub fn initialize_connection() -> Option<UdpSocket> {
             Err(_) => continue,
         };
 
-        println!("Connected?");
-
-        // socket.set_read_timeout(Some(Duration::from_secs(10)));
+        socket.set_read_timeout(Some(Duration::from_secs(10)));
 
         let mut buf = [0; 1];
         let (len, src) = socket.recv_from(&mut buf).ok()?; // TODO: .ok()? is suboptimal solution, should be replaced in future.
