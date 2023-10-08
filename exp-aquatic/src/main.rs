@@ -1,19 +1,25 @@
-#![allow(dead_code, unused_must_use)]
-#![feature(async_fn_in_trait)]
+#![allow(dead_code)]
+#![allow(unused_must_use)]
+#![allow(unused_labels)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 
-// mod input;
-// mod error;
+mod input;
 mod actions;
-mod executor;
+mod rov;
 
-use tokio;
-// use actions::Executor;
-use executor::Exec;
+use log::{trace, info, warn, error, debug};
 
+fn main() {
+    env_logger::init();
 
-#[tokio::main]
-async fn main() {
-    let mut exec = Exec::new().await;
-    exec.run(); // Never ends
-
+    let rov = rov::Rov::new();
+    let socket = 
+        input::initialize_connection().unwrap();
+    
+    
+    info!("Starting main loop");
+    'running: loop {
+        input::receive(&socket);
+    }
 }

@@ -1,10 +1,10 @@
 [workspace]
 resolver = "2"
 members = [
-    "exp-aquatic", 
-    "drivers/bme680", 
-    "drivers/bmi088", 
-    "drivers/pca9685",
-    "drivers/ms5837",
-    "murex-util"
+    "exp-aquatic",      
+    "drivers/bme680",   
+    "drivers/bmi088",   
+    "drivers/pca9685",  
+    "drivers/ms5837",   
+    "murex-util"        
 ]
