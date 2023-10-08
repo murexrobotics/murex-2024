@@ -60,7 +60,18 @@ impl Action for Resurface {
 struct EmergencySurface();
 impl Action for EmergencySurface {
     fn exec(&self, rov: Rov) {
-        todo!()
+        let pressure = rov.poll_ms5837();
+        let deadzone = 0.1; //to be tuned with testing
+        while pressure > deadzone {
+            for i in 0..4 {
+                rov.set_thruster(i, 0);
+            }
+            rov.set_thruster(4, 0);
+            rov.set_thruster(5, 0);
+        }
+        for i in 0..6 {
+            rov.set_thruster(i, 0);
+        }
     }
 }
 
