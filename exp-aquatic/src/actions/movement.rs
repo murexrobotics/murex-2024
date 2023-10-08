@@ -67,7 +67,9 @@ impl Action for EmergencySurface {
 struct EmergencyStop();
 impl Action for EmergencyStop {
     fn exec(&self, rov: Rov) {
-        todo!()
+        for i in 0..6 {
+            rov.set_thruster(i, 0);
+        }
     }
 }
 

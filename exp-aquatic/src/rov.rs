@@ -48,7 +48,7 @@ impl Rov {
         todo!()
     }
 
-    pub(crate) fn poll_ms5387(&self) -> f32 {
+    pub(crate) fn poll_ms5837(&self) -> f32 {
         todo!()
     }
 

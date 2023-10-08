@@ -18,7 +18,6 @@ impl Action for Shutdown {
 struct SystemReport();
 impl Action for SystemReport {
     fn exec(&self, rov: Rov) {
-        todo!()
     }
 }
 
