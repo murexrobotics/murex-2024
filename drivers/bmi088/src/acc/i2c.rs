@@ -126,9 +126,13 @@ where
         Ok(())
     }
 
-    pub fn get_sensor_time() -> i32 {}
+    pub fn get_sensor_time() -> i32 {
+        unimplemented!()
+    }
 
-    pub fn get_sensor_temp() -> i16 {}
+    pub fn get_sensor_temp() -> i16 {
+        unimplemented!()
+    }
 
     pub fn get_accelerometer_data() -> (i16, i16, i16) { todo!() }
 
