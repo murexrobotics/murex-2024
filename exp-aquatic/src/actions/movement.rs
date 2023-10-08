@@ -1,22 +1,80 @@
 use super::Action;
-use std::time::Duration;
+use crate::rov::Rov;
 
-pub struct Throttle {
-    throttle: f32,
-    interval: Duration
-}
 
-impl Action for Throttle {
-    async fn exec(self) {
+struct MoveToHeading(f32);
+impl Action for MoveToHeading {
+    fn exec(&self, rov: Rov) {
         todo!()
     }
 }
 
-pub struct Stabilize;
-
-impl Action for Stabilize {
-    async fn exec(self) {
+struct MoveToDepth(f32);
+impl Action for MoveToDepth {
+    fn exec(&self, rov: Rov) {
         todo!()
     }
 }
 
+struct MoveToPosition(f32, f32, f32);
+impl Action for MoveToPosition {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct MoveToRelativeHeading(f32);
+impl Action for MoveToRelativeHeading {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct MoveToRelativeDepth(f32);
+impl Action for MoveToRelativeDepth {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct MoveToRelativePosition(f32, f32, f32);
+impl Action for MoveToRelativePosition {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct ThrusterControl(usize, f32);
+impl Action for ThrusterControl {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct Resurface();
+impl Action for Resurface {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct EmergencySurface();
+impl Action for EmergencySurface {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct EmergencyStop();
+impl Action for EmergencyStop {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
+
+struct ToggleStabilityControl(bool);
+impl Action for ToggleStabilityControl {
+    fn exec(&self, rov: Rov) {
+        todo!()
+    }
+}
