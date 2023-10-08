@@ -1,7 +1,6 @@
 use super::Action;
 use crate::rov::Rov;
 
-
 struct MoveToHeading(f32);
 impl Action for MoveToHeading {
     fn exec(&self, rov: Rov) {
