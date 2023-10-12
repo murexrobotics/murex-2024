@@ -5,6 +5,5 @@ members = [
     "drivers/bme680",   
     "drivers/bmi088",   
     "drivers/pca9685",  
-    "drivers/ms5837",   
-    "murex-util"        
+    "drivers/ms5837",    
 ]
