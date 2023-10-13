@@ -19,6 +19,7 @@ name = "aquatic"
 path = "src/lib.rs"
 
 [dependencies]
+anyhow = "1.0.75"
 async-trait = "0.1.73"
 embedded-hal = "0.2.7"
 enum_dispatch = "0.3.12"
