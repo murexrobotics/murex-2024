@@ -68,7 +68,7 @@ struct EmergencyStop();
 impl Action for EmergencyStop {
     fn exec(&self, rov: &mut Rov) {
         for i in 0..6 {
-            rov.set_thruster(i, 0);
+            rov.set_thruster(i, 0f32);
         }
     }
 }
