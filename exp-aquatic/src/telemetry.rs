@@ -12,8 +12,8 @@ use embedded_hal::blocking::{i2c, delay::DelayMs};
 use linux_embedded_hal::{Delay, I2cdev};
 use lis3mdl_driver::{Lis3mdl, Address};
 use shared_bus::BusManagerSimple;
-// use ms5837;
-// use rppal::gpio::Gpio;
+use ms5837;
+use pmw3901::Pmw3901;
 
 use serde::Serialize;
 use serde_json;
@@ -47,11 +47,49 @@ pub struct Telemetry {
 
 impl Telemetry{
     pub fn start() -> (Receiver<TelemetryPacket>, Telemetry) {
-        // TODO: Initialize MPSC channel
-        // TODO: Spawn telemetry thread
-        // TODO: Init BME680, BMI088, MS5837, LIS3MDL, PMW3901
-        // TODO: Polling sensors in event loop
-        todo!()
+        let (main_sender, main_receiver) = std::sync::mpsc::channel();
+        let (sys_sender, sys_receiver) = std::sync::mpsc::channel();
+        
+        let handle = std::thread::spawn(move || {
+            // ---------- Initialize I2C bus ----------
+            let i2c = BusManagerSimple::new(I2cdev::new("/dev/i2c-1").expect("Failed to initialize I2C bus"));
+            let mut delay = Delay {};
+
+            // ---------- Initialize BME680 ----------
+            // TODO: Adjust settings, play with oversampling and filter size
+            let mut bme = Bme680::init(i2c.acquire_i2c(), &mut delay, I2CAddress::Primary).expect("Failed to initialize BME680");
+            let settings = SettingsBuilder::new()
+                .with_gas_measurement(Duration::from_millis(1500), 320, 25)
+                .with_temperature_offset(-5.0)
+                .with_run_gas(true)
+                .build();
+            bme.set_sensor_settings(&mut delay, settings).expect("Failed to set BME680 settings");
+
+            // ---------- Initialize MS5837 ----------
+            let mut ms = ms5837::new(i2c.acquire_i2c()).init().expect("Failed to initialize MS5837");
+
+            // ---------- Initialize BMI088 ----------
+            // TODO: Pending completion of driver *cough* *cough*
+
+            // ---------- Initialize LIS3MDL ----------
+            let mut lis = Lis3mdl::new(i2c.acquire_i2c(), Address::Addr1C).expect("Failed to initialize LIS3MDL");
+
+            // ---------- Initialize PMW3901 ----------
+            // TODO: Adjust bus and pin numbers
+            let mut pmw = Pmw3901::new(0, 0).expect("Invalid SPI bus or pin numbers").init().expect("Failed to initialize PMW3901");
+
+            // TODO: Implement event loop
+            loop {
+            }
+        });
+
+        (
+            sys_receiver, 
+            Telemetry {
+                handle: Some(handle),
+                main_sender
+            }
+        )
     }
 }
 
