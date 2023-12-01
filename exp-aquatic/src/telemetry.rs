@@ -79,7 +79,27 @@ impl Telemetry{
             let mut pmw = Pmw3901::new(0, 0).expect("Invalid SPI bus or pin numbers").init().expect("Failed to initialize PMW3901");
 
             // TODO: Implement event loop
-            loop {
+            'telemetry: loop {
+                if let Ok(cmd) = main_receiver.try_recv() {
+                    match cmd {
+                        TelemetryCommand::Stop => break 'telemetry,
+                        _ => todo!("Implement TelemetryCommands"),
+                    }
+                }
+
+                // TODO: Read data from sensors
+                let telemetry = TelemetryPacket {
+                    humidity: 0,
+                    temperature: 0,
+                    gas_resistance: 0,
+                    internal_pressure: 0,
+                    external_pressure: 0.0,
+                    acceleration: (0.0, 0.0, 0.0),
+                    angular_velocity: (0.0, 0.0, 0.0),
+                    magnetic_field: (0, 0, 0),
+                };
+
+                sys_sender.send(telemetry).expect("Failed to send telemetry packet");
             }
         });
 
