@@ -14,21 +14,27 @@ authors = ["Altan Ünver, Ph.D.", "Byran Huang, Ph.D.", "Chaney Hollis", "Ethan 
 name = "aquatic"
 path = "src/main.rs"
 
-[lib]
-name = "aquatic"
-path = "src/lib.rs"
-
 [dependencies]
+pid = "4.0.0"
 anyhow = "1.0.75"
-async-trait = "0.1.73"
-embedded-hal = "0.2.7"
-enum_dispatch = "0.3.12"
-env_logger = "0.10.0"
-linux-embedded-hal = "0.3.2"
 log = "0.4.20"
-rppal = "0.14.1"
+env_logger = "0.10.0"
 text_io = "0.1.12"
-tokio = { version = "1.32.0", features = ["full"] }
+embedded-hal = "0.2.7"
+linux-embedded-hal = "0.3.2"
+rppal = "0.15.0"
+lis3mdl-driver = "0.1.0"
+bme680 = "0.6.0"
+shared-bus = "0.3.1"
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
+ahrs = "0.6.0"
+nalgebra = "^0.31"
+ms5837 = "0.2.1"
+pmw3901 = "1.0.0"
+
+# https://users.rust-lang.org/t/cross-compiling-from-macos-to-arm/56060/6
+
 
 # ms5837 = { path = "../drivers/ms5837", optional = false }
 # bme680 = { path = "../drivers/bme680", optional = true }
