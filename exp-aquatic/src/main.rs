@@ -1,25 +1,20 @@
 #![allow(dead_code)]
-#![allow(unused_must_use)]
-#![allow(unused_labels)]
-#![allow(unused_variables)]
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 
-mod input;
-mod actions;
-mod rov;
+mod system;
+mod telemetry;
+mod socket;
 
-use log::{trace, info, warn, error, debug};
+use telemetry::Telemetry;
+use system::System;
 
 fn main() {
-    env_logger::init();
+    let socket = socket::initialize_connection().unwrap();
 
-    let rov = rov::Rov::new();
-    let socket = 
-        input::initialize_connection().unwrap();
-    
-    
-    info!("Starting main loop");
-    'running: loop {
-        input::receive(&socket);
+    let (tel_sys_channel, tel) = Telemetry::start();
+
+    loop {
+
     }
 }
