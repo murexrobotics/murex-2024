@@ -1,9 +1,6 @@
 use linux_embedded_hal::I2cdev;
 use pca9685::PCA9685;
-use std::{
-    thread::sleep,
-    time::Duration
-};
+use std::{thread::sleep, time::Duration};
 
 fn main() {
     let dev = I2cdev::new("/dev/i2c-1").unwrap();

@@ -70,7 +70,7 @@ pub struct IntConfig {
     pub map_fifo_full: bool,
     pub stream_mode: bool, // VS FIFO Mode
     pub store_int_data: bool,
-    pub push_pull: bool, // VS Open Drain
+    pub push_pull: bool,   // VS Open Drain
     pub active_high: bool, // VS Active Low
 }
 

@@ -1,4 +1,4 @@
-use core::fmt::{Display, Debug};
+use core::fmt::{Debug, Display};
 // use core::error::Error;
 // TODO: Use nightly rust to implement core `Error` trait
 

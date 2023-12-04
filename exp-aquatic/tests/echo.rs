@@ -1,6 +1,6 @@
 use std::error::Error;
-use std::time::Duration;
 use std::thread::sleep;
+use std::time::Duration;
 
 use rppal::uart::{Parity, Uart};
 
@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let n = uart.read(&mut buffer)?;
         println!("Read {n} bytes");
         if n > 0 {
-            if let Ok(s) = String::from_utf8(buffer.to_vec()){
+            if let Ok(s) = String::from_utf8(buffer.to_vec()) {
                 println!(">>> {:?}", s);
             }
         }

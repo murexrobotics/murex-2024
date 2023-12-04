@@ -6,10 +6,10 @@ use core::result;
 use core::time::Duration;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::blocking::i2c;
+use env_logger;
 use linux_embedded_hal as hal;
 use linux_embedded_hal::Delay;
 use log::info;
-use env_logger;
 
 fn main(
 ) -> result::Result<(), Error<<hal::I2cdev as i2c::Read>::Error, <hal::I2cdev as i2c::Write>::Error>>

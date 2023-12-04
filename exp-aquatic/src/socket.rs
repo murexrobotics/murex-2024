@@ -7,7 +7,7 @@ const PI_IP_ADDRESS: &str = "192.168.100.1";
 const MAX_MESSAGE_SIZE: usize = 16;
 
 /// Initialize socket connection between the Pi and the topside computer.
-/// Must receive 0xFF from topside computer to establish connection. 
+/// Must receive 0xFF from topside computer to establish connection.
 pub fn initialize_connection() -> Option<UdpSocket> {
     // TODO: Switch return type to Result<UdpSocket> instead
     let mut attempts = 0;
@@ -26,9 +26,9 @@ pub fn initialize_connection() -> Option<UdpSocket> {
         if len == 1 && buf[0] == 0xFF {
             socket.connect(src).ok()?;
             socket.send(&[0xFF]).ok()?;
-            return Some(socket)
+            return Some(socket);
         } else {
-            return None // Handshake failed
+            return None; // Handshake failed
         }
     }
     None // Exceeded connection attempts

@@ -1,6 +1,6 @@
+use rppal::uart::{Parity, Uart};
 use std::error::Error;
 use std::time::Duration;
-use rppal::uart::{Parity, Uart};
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Connecting to UART...");

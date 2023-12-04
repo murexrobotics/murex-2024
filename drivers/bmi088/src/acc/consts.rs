@@ -33,8 +33,8 @@ pub(crate) const ACC_ERR_REG: u8 = 0x02;
 pub(crate) const ACC_CHIP_ID: u8 = 0x00;
 
 // ----------- Resgiter Reserve Masks ------------
-// These masks are intended to be used to preserve 
-// reserved bits in registers. Use when writing to 
+// These masks are intended to be used to preserve
+// reserved bits in registers. Use when writing to
 // RW registers
 pub(crate) const INT_MAP_DATA_RESERVED: u8 = 0b10001000;
 pub(crate) const INT2_IO_CTRL_RESERVED: u8 = 0b11100001;
@@ -124,8 +124,3 @@ pub(crate) const ACC_FIFO_MODE: u8 = 0x01;
 pub(crate) const ENABLE_ACC_FIFO: u8 = 0b01000000;
 pub(crate) const ENABLE_FIFO_INT1_STORE: u8 = 0b00001000;
 pub(crate) const ENABLE_FIFO_INT2_STORE: u8 = 0b00000100;
-
-
-
-
-

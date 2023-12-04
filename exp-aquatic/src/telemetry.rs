@@ -2,18 +2,18 @@
 // TODO: Adjust i2c bus
 // TODO: Adjust sensor settings/ configs
 
-use std::sync::mpsc::{Sender, Receiver};
-use std::thread::JoinHandle;
 use std::net::UdpSocket;
+use std::sync::mpsc::{Receiver, Sender};
+use std::thread::JoinHandle;
 use std::time::Duration;
 
-use bme680::{SettingsBuilder, Bme680, OversamplingSetting, IIRFilterSize, PowerMode, I2CAddress};
-use embedded_hal::blocking::{i2c, delay::DelayMs};
+use bme680::{Bme680, I2CAddress, IIRFilterSize, OversamplingSetting, PowerMode, SettingsBuilder};
+use embedded_hal::blocking::{delay::DelayMs, i2c};
 use linux_embedded_hal::{Delay, I2cdev};
-use lis3mdl_driver::{Lis3mdl, Address};
-use shared_bus::BusManagerSimple;
+use lis3mdl_driver::{Address, Lis3mdl};
 use ms5837;
 use pmw3901::Pmw3901;
+use shared_bus::BusManagerSimple;
 
 use serde::Serialize;
 use serde_json;
@@ -42,41 +42,51 @@ pub struct TelemetryPacket {
 
 pub struct Telemetry {
     handle: Option<JoinHandle<()>>,
-    main_sender: Sender<TelemetryCommand>
+    main_sender: Sender<TelemetryCommand>,
 }
 
-impl Telemetry{
+impl Telemetry {
     pub fn start() -> (Receiver<TelemetryPacket>, Telemetry) {
         let (main_sender, main_receiver) = std::sync::mpsc::channel();
         let (sys_sender, sys_receiver) = std::sync::mpsc::channel();
-        
+
         let handle = std::thread::spawn(move || {
             // ---------- Initialize I2C bus ----------
-            let i2c = BusManagerSimple::new(I2cdev::new("/dev/i2c-1").expect("Failed to initialize I2C bus"));
+            let i2c = BusManagerSimple::new(
+                I2cdev::new("/dev/i2c-1").expect("Failed to initialize I2C bus"),
+            );
             let mut delay = Delay {};
 
             // ---------- Initialize BME680 ----------
             // TODO: Adjust settings, play with oversampling and filter size
-            let mut bme = Bme680::init(i2c.acquire_i2c(), &mut delay, I2CAddress::Primary).expect("Failed to initialize BME680");
+            let mut bme = Bme680::init(i2c.acquire_i2c(), &mut delay, I2CAddress::Primary)
+                .expect("Failed to initialize BME680");
             let settings = SettingsBuilder::new()
                 .with_gas_measurement(Duration::from_millis(1500), 320, 25)
                 .with_temperature_offset(-5.0)
                 .with_run_gas(true)
                 .build();
-            bme.set_sensor_settings(&mut delay, settings).expect("Failed to set BME680 settings");
+            bme.set_sensor_settings(&mut delay, settings)
+                .expect("Failed to set BME680 settings");
 
             // ---------- Initialize MS5837 ----------
-            let mut ms = ms5837::new(i2c.acquire_i2c()).init().expect("Failed to initialize MS5837");
+            let mut ms = ms5837::new(i2c.acquire_i2c())
+                .init()
+                .expect("Failed to initialize MS5837");
 
             // ---------- Initialize BMI088 ----------
             // TODO: Pending completion of driver *cough* *cough*
 
             // ---------- Initialize LIS3MDL ----------
-            let mut lis = Lis3mdl::new(i2c.acquire_i2c(), Address::Addr1C).expect("Failed to initialize LIS3MDL");
+            let mut lis = Lis3mdl::new(i2c.acquire_i2c(), Address::Addr1C)
+                .expect("Failed to initialize LIS3MDL");
 
             // ---------- Initialize PMW3901 ----------
             // TODO: Adjust bus and pin numbers
-            let mut pmw = Pmw3901::new(0, 0).expect("Invalid SPI bus or pin numbers").init().expect("Failed to initialize PMW3901");
+            let mut pmw = Pmw3901::new(0, 0)
+                .expect("Invalid SPI bus or pin numbers")
+                .init()
+                .expect("Failed to initialize PMW3901");
 
             // TODO: Implement event loop
             'telemetry: loop {
@@ -99,23 +109,27 @@ impl Telemetry{
                     magnetic_field: (0, 0, 0),
                 };
 
-                sys_sender.send(telemetry).expect("Failed to send telemetry packet");
+                sys_sender
+                    .send(telemetry)
+                    .expect("Failed to send telemetry packet");
             }
         });
 
         (
-            sys_receiver, 
+            sys_receiver,
             Telemetry {
                 handle: Some(handle),
-                main_sender
-            }
+                main_sender,
+            },
         )
     }
 }
 
 impl Drop for Telemetry {
     fn drop(&mut self) {
-        self.main_sender.send(TelemetryCommand::Stop).expect("Failed to send stop message");
+        self.main_sender
+            .send(TelemetryCommand::Stop)
+            .expect("Failed to send stop message");
         if let Some(handle) = self.handle.take() {
             handle.join().expect("Failed to join Telemetry thread");
         }
@@ -124,10 +138,14 @@ impl Drop for Telemetry {
 
 impl Telemetry {
     pub fn calibrate(&mut self) {
-        self.main_sender.send(TelemetryCommand::ReCalibrate).expect("Failed to send recalibrate message");
+        self.main_sender
+            .send(TelemetryCommand::ReCalibrate)
+            .expect("Failed to send recalibrate message");
     }
 
     pub fn stop(&mut self) {
-        self.main_sender.send(TelemetryCommand::Stop).expect("Failed to send stop message");
+        self.main_sender
+            .send(TelemetryCommand::Stop)
+            .expect("Failed to send stop message");
     }
 }

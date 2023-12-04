@@ -7,7 +7,7 @@ fn main() {
         threads.push(thread::spawn(|| {
             let mut i: f64 = 1.28347918237417234;
             loop {
-                i = i*i*i*i;
+                i = i * i * i * i;
             }
         }));
     }
