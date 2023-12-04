@@ -89,10 +89,10 @@ impl Telemetry{
 
                 // TODO: Read data from sensors
                 let telemetry = TelemetryPacket {
-                    humidity: 0,
-                    temperature: 0,
+                    humidity: 0.0,
+                    temperature: 0.0,
                     gas_resistance: 0,
-                    internal_pressure: 0,
+                    internal_pressure: 0.0,
                     external_pressure: 0.0,
                     acceleration: (0.0, 0.0, 0.0),
                     angular_velocity: (0.0, 0.0, 0.0),
