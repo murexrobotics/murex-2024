@@ -1,0 +1,14 @@
+{
+    "name": "socket_server",
+    "version": "1.0.0",
+    "description": "UDP Socket Server to test the ROV client",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Anshul Noori",
+    "license": "MIT",
+    "dependencies": {
+      "ws": "^8.14.2"
+    }
+  }
