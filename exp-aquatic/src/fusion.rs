@@ -23,13 +23,13 @@ const BETA: f32 = 0.1;
 /// let (x, y, z) = pos(telemetry);
 /// ```
 pub fn init_sensor_fusion() -> (
-    impl FnMut(TelemetryPacket) -> (f32, f32, f32),
-    impl FnMut(TelemetryPacket) -> (f32, f32, f32),
+    impl FnMut(&TelemetryPacket) -> (f32, f32, f32),
+    impl FnMut(&TelemetryPacket) -> (f32, f32, f32),
 ) {
     let mut ahrs = Madgwick::new(SAMPLE_RATE, BETA);
 
     return (
-        move |telemetry: TelemetryPacket| calculate_ahrs(&mut ahrs, telemetry),
+        move |telemetry| calculate_ahrs(&mut ahrs, telemetry),
         move |telemetry| todo!(),
     );
 }
@@ -44,7 +44,7 @@ pub fn init_sensor_fusion() -> (
 ///
 /// ## Returns:
 /// Tuple representing rotation in radians (pitch, roll, yaw)
-fn calculate_ahrs(ahrs: &mut Madgwick<f32>, telemetry: TelemetryPacket) -> (f32, f32, f32) {
+fn calculate_ahrs(ahrs: &mut Madgwick<f32>, telemetry: &TelemetryPacket) -> (f32, f32, f32) {
     let accel = Vector3::new(
         telemetry.acceleration.0,
         telemetry.acceleration.1,
@@ -72,6 +72,6 @@ fn calculate_ahrs(ahrs: &mut Madgwick<f32>, telemetry: TelemetryPacket) -> (f32,
 }
 
 /// Position Estimation System.
-fn calculate_position(telemetry: TelemetryPacket) -> (f32, f32, f32) {
+fn calculate_position(telemetry: &TelemetryPacket) -> (f32, f32, f32) {
     todo!()
 }

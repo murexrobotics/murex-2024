@@ -1,10 +1,12 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
+#![allow(unused_mut)]
 
 mod socket;
 mod system;
 mod telemetry;
+mod fusion;
 
 use system::System;
 use telemetry::Telemetry;
