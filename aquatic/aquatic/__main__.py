@@ -1,6 +1,6 @@
 import time
 import thrusters, bme680, camera, arm, pixel, i2c
-import udpsocket #unsure
+import udpsocket
 
 websocket = udpsocket.socket
 telemetrydict = {}
