@@ -6,4 +6,5 @@ members = [
     "drivers/bmi088",   
     "drivers/pca9685",  
     "drivers/ms5837",    
+    "test"
 ]

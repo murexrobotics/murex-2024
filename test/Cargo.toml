@@ -1,0 +1,12 @@
+[package]
+name = "test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-hal = "0.2.7"
+linux-embedded-hal = "0.3.2"
+lis3mdl-driver = "0.1.0"
+rppal = "0.16.0"
+
+
