@@ -5,11 +5,11 @@ from models.socket import UDPSocket
 
 from utils.logger import logger;
 
-WS_IP = "127.0.0.1"
-WS_PORT = 5555
+IP = "127.0.0.1"
+PORT = 5555
 
 # would import this in other modules
-socket = UDPSocket(WS_IP, WS_PORT)
+socket = UDPSocket(IP, PORT)
 
 async def main():
     await socket.open()

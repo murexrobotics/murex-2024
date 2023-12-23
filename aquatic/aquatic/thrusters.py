@@ -1,56 +1,41 @@
-import serial
-
-MASCP_FORMAT = "[{address}, {thrust_magnitude}]"
-THRUSTER_MAX = 255
-THRUSTER_NEUTRAL = 127
-THRUSTER_MIN = 0
+import json
+import atexit
+from models.thruster import Thruster
+from udpsocket import socket
 
 thrusters = []
 
-class Thruster:
-    def __init__(self, name, address):
-        self.name = name
-        self.address = address
-        self.set_throttle(THRUSTER_NEUTRAL)
+def __init__():
+    #Initializing thrusters, 0 is a placeholder for addresses
+    t1 = Thruster("t1", 0)
+    t2 = Thruster("t2", 0)
+    t3 = Thruster("t3", 0)
+    t4 = Thruster("t4", 0)
+    t5 = Thruster("t5", 0)
+    t6 = Thruster("t6", 0)
 
-    def __del__(self):
-        self.set_throttle(THRUSTER_NEUTRAL)
+    thrusters.append(t1, t2, t3, t4, t5, t6)
 
-    def update(self):
-        pass
+    socket.on_message_recieved += handle_throttle_update
 
-    def set_throttle(self, throttle, from_topside=False):
+    atexit.register(__deinit__)
 
-        if from_topside:
-            # convert from value between -1 and 1 to 0 and 255
-            throttle = (throttle + 1) * THRUSTER_NEUTRAL
+def __deinit__():
+    socket.on_message_recieved -= handle_throttle_update
 
-        # Ensure throttle is within bounds
-        throttle = max(THRUSTER_MIN, min(THRUSTER_MAX, throttle))
-
-        self.throttle = throttle
-        MASCP_FORMAT.format(address=self.address, thrust_magnitude=self.throttle)
-
-    def get_throttle(self):
-        return self.throttle
-    
-    def telemetry(self):
-        return {
-            "name": self.name,
-            "port": self.port,
-            "throttle": self.throttle
-        }
-
-def update():
+def set_throttle(throttle):
     for thruster in thrusters:
-        thruster.update()
+        thruster.set_throttle(throttle)
+
+def handle_throttle_update(payload):
+    msg = json.loads(payload)
+    
+    for thruster in thrusters:
+        thruster.set_throttle(msg[thruster.name], True)
+
 
 def telemetry():
     json = {
-        "thrusters": {}
+        "thrusters": [thruster.telemetry() for thruster in thrusters]
     }
-
-    for thruster in thrusters:
-        json["thrusters"][thruster.name] = thruster.telemetry()
-
     return json
